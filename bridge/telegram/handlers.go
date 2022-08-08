@@ -1,6 +1,7 @@
 package btelegram
 
 import (
+	"regexp"
 	"fmt"
 	"html"
 	"path/filepath"
@@ -492,6 +493,15 @@ func (b *Btelegram) handleUploadFile(msg *config.Message, chatid int64, parentID
 }
 
 func (b *Btelegram) handleQuote(message, quoteNick, quoteMessage string) string {
+	// HACK: extract the original quoted username (this is super specific to my settings)
+	if quoteNick == "x64dbg_bot" {
+		re := regexp.MustCompile(`^<([^>]+)> (.+)$`)
+		matches := re.FindStringSubmatch(quoteMessage)
+		if len(matches) == 3 {
+			quoteNick = matches[1]
+			quoteMessage = matches[2]
+		}
+	}
 	format := b.GetString("quoteformat")
 	if format == "" {
 		format = "{MESSAGE} (re @{QUOTENICK}: {QUOTEMESSAGE})"

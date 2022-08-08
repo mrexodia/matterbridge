@@ -1,7 +1,7 @@
 package btelegram
 
 import (
-	"fmt"
+	//"fmt"
 	"html"
 	"log"
 	"strconv"
@@ -112,7 +112,7 @@ func (b *Btelegram) Send(msg config.Message) (string, error) {
 	// Handle prefix hint for unthreaded messages.
 	if msg.ParentNotFound() {
 		msg.ParentID = ""
-		msg.Text = fmt.Sprintf("[reply]: %s", msg.Text)
+		//msg.Text = fmt.Sprintf("[reply]: %s", msg.Text)
 	}
 
 	var parentID int
